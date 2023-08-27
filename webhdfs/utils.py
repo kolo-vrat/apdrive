@@ -1,5 +1,5 @@
 import subprocess
-import errors
+from . import errors
 
 from requests import Response
 

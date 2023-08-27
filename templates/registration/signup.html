@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<h2>You are already logged in, <a href="{% url 'home' %}">click here</a> to go to the home page</h2>
+{% else %}
+<h2>Sign Up</h2>
+<form id="registration-form" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sign Up</button>
+</form>
+{% endif %}
+{% endblock content %}
