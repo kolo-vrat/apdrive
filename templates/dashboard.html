@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+<h2>Dashboard</h2>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb" id="breadcrumbs">
+        <li class="breadcrumb-item" aria-current="page">Home</li>
+    </ol>
+</nav>
+<div class="create">
+    <div>
+        <button class="button" id="addFileBtn"><img src="{% static 'images/plus-icon.png' %}" alt="Plus Icon">
+            File</button>
+        <button class="button" id="addFolderBtn"><img src="{% static 'images/plus-icon.png' %}" alt="Plus Icon">
+            Folder</button>
+    </div>
+    <div style="display: none;" id="fileNameContainer">
+        <form action="/webhdfs_upload/" method="post" enctype="multipart/form-data" id="fileUploadForm">
+            <input type="file" name="file" required="true" id="fileInput">
+            <input type="submit" class="btn btn-primary" value="Upload">
+        </form>
+    </div>
+    <div style="display: none;" id="folderNameContainer">
+        <input type="text" id="folderNameInput" placeholder="Enter folder name">
+        <button type="button" class="btn btn-info" id="folderNameSubmit">Save</button>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-6 border border-3 border-top-0">
+            <h3 class="border-bottom">Folders</h3>
+            <div id="folders">
+                Nothing to show here...
+            </div>
+        </div>
+        <div class="col-6 border border-3 border-top-0">
+            <h3 class="border-bottom">Files</h3>
+            <div id="files">
+                Nothing to show here...
+            </div>
+        </div>
+    </div>
+</div>
+<div id="backButtonContainer">
+    <button type="button" id="backBtn" class="btn btn-primary" style="display: none;">Go Back</button>
+</div>
+<script src="{% static 'js/apdrive.js' %}"></script>
+{% endblock content %}

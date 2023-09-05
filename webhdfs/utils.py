@@ -4,6 +4,7 @@ from . import errors
 from requests import Response
 
 
+# This can be changed to use WebHDFS API instead
 def add_user(user_name: str) -> None:
     proc = subprocess.run(["hadoop", "fs", "-mkdir", f"/{user_name}"])
     proc.check_returncode()

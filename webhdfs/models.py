@@ -1,3 +1,5 @@
+import json
+
 from dataclasses import dataclass, fields
 
 
@@ -21,3 +23,6 @@ class File:
         for k, v in kwargs.items():
             if k in names:
                 setattr(self, k, v)
+
+    def to_json_string(self) -> str:
+        return json.dumps(self.__dict__)

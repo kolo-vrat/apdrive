@@ -1,6 +1,7 @@
 from typing import Any, Dict
 from django.contrib import messages
 from django.contrib.auth import logout
+from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.views.generic.edit import FormView
@@ -35,8 +36,9 @@ class SignUpView(FormView):
             return redirect("signup")
 
 
-class DriveLoginView(LoginView):
+class DriveLoginView(SuccessMessageMixin, LoginView):
     template_name = "registration/login.html"
+    success_message = "You have successfully logged in!"
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
