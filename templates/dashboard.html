@@ -3,48 +3,62 @@
 {% block content %}
 {% load static %}
 <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-<h2>Dashboard</h2>
-<nav aria-label="breadcrumb">
+<div class="text-center pt-3 text-danger border-bottom border-danger border-4">
+    <h2>Dashboard</h2>
+</div>
+<nav aria-label="breadcrumb" class="mt-3">
     <ol class="breadcrumb" id="breadcrumbs">
-        <li class="breadcrumb-item" aria-current="page">Home</li>
+        <li class="breadcrumb-item" aria-current="page"><span>You are here 👉 </span>Home</li>
     </ol>
 </nav>
 <div class="create">
-    <div>
-        <button class="button" id="addFileBtn"><img src="{% static 'images/plus-icon.png' %}" alt="Plus Icon">
-            File</button>
-        <button class="button" id="addFolderBtn"><img src="{% static 'images/plus-icon.png' %}" alt="Plus Icon">
-            Folder</button>
+    <div class="d-flex justify-content-center">
+        <div class="mb-3">
+            <button class="btn btn-outline-dark border-3 me-4" id="addFileBtn"><img
+                    src="{% static 'images/plus-icon.png' %}" alt="Plus Icon">
+                File</button>
+            <button class="btn btn-outline-dark border-3" id="addFolderBtn"><img
+                    src="{% static 'images/plus-icon.png' %}" alt="Plus Icon">
+                Folder</button>
+        </div>
     </div>
-    <div style="display: none;" id="fileNameContainer">
-        <form action="/webhdfs_upload/" method="post" enctype="multipart/form-data" id="fileUploadForm">
-            <input type="file" name="file" required="true" id="fileInput">
-            <input type="submit" class="btn btn-primary" value="Upload">
-        </form>
-    </div>
-    <div style="display: none;" id="folderNameContainer">
-        <input type="text" id="folderNameInput" placeholder="Enter folder name">
-        <button type="button" class="btn btn-info" id="folderNameSubmit">Save</button>
+    <div class="d-flex justify-content-center mb-4">
+        <div style="display: none;" id="fileNameContainer">
+            <form action="/webhdfs_upload/" method="post" enctype="multipart/form-data" id="fileUploadForm">
+                <div class="input-group">
+                    <input class="form-control" type="file" name="file" required="true" id="fileInput">
+                    <input type="submit" class="btn btn-success" value="Upload">
+                </div>
+            </form>
+        </div>
+        <div style="display: none;" id="folderNameContainer">
+            <div class="input-group">
+                <span class="input-group-text" id="folder-name">Name:</span>
+                <input type="text" id="folderNameInput" class="form-control" placeholder="Enter folder name"
+                    aria-label="Folder Name" aria-describedby="folder-name">
+                <button type="button" class="btn btn-success" id="folderNameSubmit">Save</button>
+            </div>
+        </div>
     </div>
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-6 border border-3 border-top-0">
-            <h3 class="border-bottom">Folders</h3>
+        <div class="col-md-6 col-sm-12 mb-2 shadow rounded p-3">
+            <h3 class="border-bottom border-3">Folders</h3>
             <div id="folders">
                 Nothing to show here...
             </div>
         </div>
-        <div class="col-6 border border-3 border-top-0">
-            <h3 class="border-bottom">Files</h3>
+        <div class="col-md-6 col-sm-12 mb-2 shadow rounded p-3">
+            <h3 class="border-bottom border-3">Files</h3>
             <div id="files">
                 Nothing to show here...
             </div>
         </div>
     </div>
-</div>
-<div id="backButtonContainer">
-    <button type="button" id="backBtn" class="btn btn-primary" style="display: none;">Go Back</button>
+    <div class="row p-3" id="backButtonContainer">
+        <button type="button" id="backBtn" class="btn btn-primary mt-3" style="display: none;">Go Back</button>
+    </div>
 </div>
 <script src="{% static 'js/apdrive.js' %}"></script>
 {% endblock content %}

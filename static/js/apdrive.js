@@ -204,6 +204,7 @@ function showFilesDirs(fileList) {
         itemElem.isDeleting = false;
 
         if (element.type == "FILE") {
+            itemElem.classList.add("icon", "file-item");
             const itemText = document.createTextNode(element.pathSuffix);
             itemElem.appendChild(itemText);
             itemElem.ondblclick = () => {
@@ -217,6 +218,7 @@ function showFilesDirs(fileList) {
                 offHeaderDiv.classList.add("offcanvas-header");
 
                 const offTitleElem = document.createElement("input");
+                offTitleElem.classList.add("form-control");
                 offTitleElem.setAttribute("type", "text");
                 offTitleElem.setAttribute("name", "fileName");
                 offTitleElem.value = element.pathSuffix;
@@ -275,7 +277,7 @@ function showFilesDirs(fileList) {
 
                 const offFileDeleteBtn = document.createElement("button");
                 offFileDeleteBtn.textContent = "Delete";
-                offFileDeleteBtn.classList.add("btn", "btn-danger");
+                offFileDeleteBtn.classList.add("btn", "btn-danger", "ms-2");
 
                 offBodyDiv.append(offFileDownloadBtn, offFileDeleteBtn);
 
@@ -312,8 +314,15 @@ function showFilesDirs(fileList) {
                 offCanvas.show();
             }
         } else {
+            const folderItemInputDiv = document.createElement("div");
+            folderItemInputDiv.classList.add("input-group", "mb-1");
+
+            const folderInputSpan = document.createElement("span");
+            folderInputSpan.classList.add("icon", "dir-item");
+
             const folderNameInputElem = document.createElement("input");
 
+            folderNameInputElem.classList.add("form-control", "form-control-sm");
             folderNameInputElem.setAttribute("type", "text");
             folderNameInputElem.setAttribute("name", "folderName");
             folderNameInputElem.value = element.pathSuffix;
@@ -325,6 +334,9 @@ function showFilesDirs(fileList) {
                         const jsonRename = await renameResponse.json();
                         if (jsonRename.message) {
                             createToast(jsonRename.message);
+                            const listResponse = await listDir(path);
+                            showFilesDirs(listResponse);
+                            checkBackButton();
                         } else {
                             createToast(jsonRename.error);
                         }
@@ -332,9 +344,11 @@ function showFilesDirs(fileList) {
                 }
             });
 
+            folderItemInputDiv.append(folderInputSpan, folderNameInputElem);
+
             const folderDeleteBtn = document.createElement("button");
             folderDeleteBtn.textContent = "Delete";
-            folderDeleteBtn.classList.add("btn", "btn-danger");
+            folderDeleteBtn.classList.add("btn", "btn-sm", "btn-danger", "float-end");
 
             folderDeleteBtn.onclick = async () => {
                 if (folderDeleteBtn.textContent.includes("Delete")) {
@@ -345,7 +359,7 @@ function showFilesDirs(fileList) {
 
                     const cancelDeleteElement = document.createElement("button");
                     cancelDeleteElement.textContent = "✘"
-                    cancelDeleteElement.classList.add("btn", "btn-danger");
+                    cancelDeleteElement.classList.add("btn", "btn-danger", "btn-sm", "float-end", "me-1");
 
                     itemElem.appendChild(cancelDeleteElement);
 
@@ -374,7 +388,7 @@ function showFilesDirs(fileList) {
                 }
             }
 
-            itemElem.appendChild(folderNameInputElem);
+            itemElem.appendChild(folderItemInputDiv);
             itemElem.appendChild(folderDeleteBtn);
             itemElem.ondblclick = async () => {
                 if (!itemElem.isDeleting) {
@@ -401,10 +415,19 @@ function showFilesDirs(fileList) {
     folderContainer.innerHTML = "";
     if (listElemFolders.childElementCount > 0) {
         folderContainer.appendChild(listElemFolders)
+    } else {
+        const noElemHeading = document.createElement("h5");
+        noElemHeading.textContent = "Nothing to show here";
+        folderContainer.appendChild(noElemHeading);
     }
+
     fileContainer.innerHTML = "";
     if (listElemFiles.childElementCount > 0) {
         fileContainer.appendChild(listElemFiles);
+    } else {
+        const noElemHeading = document.createElement("h5");
+        noElemHeading.textContent = "Nothing to show here";
+        fileContainer.appendChild(noElemHeading);
     }
 }
 

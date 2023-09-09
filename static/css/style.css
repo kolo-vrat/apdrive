@@ -1,0 +1,26 @@
+.main-wrapper {
+    background-color: silver;
+    padding: 20px;
+    display: grid;
+    grid-template-rows: 1fr;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.icon::before {
+    content: "";
+    background-size: 30px 30px;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.file-item::before {
+    background-image: url("../images/file40.png");
+}
+
+.dir-item::before {
+    background-image: url("../images/folder40.png");
+}

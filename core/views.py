@@ -1,5 +1,6 @@
 import json
 
+from typing import Any, Dict
 from django.conf import settings
 from django.http import JsonResponse, StreamingHttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -14,6 +15,11 @@ class HomeView(TemplateView):
 
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = "dashboard.html"
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Dashboard"
+        return context
 
 
 def webhdfs_view(request):

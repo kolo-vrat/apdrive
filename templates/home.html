@@ -1,13 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% if user.is_authenticated %}
-<p>Welcome, {{ user.username }}</p>
-<a href="{% url 'dashboard' %}">Dashboard</a>
-<a href="{% url 'logout' %}">Log Out</a>
-{% else %}
-<p>You are not logged in.</p>
-<a href="{% url 'login' %}">Log In</a>
-<a href="{% url 'signup' %}">Sign Up</a>
-{% endif %}
+<div class="content-wrapper d-flex justify-content-center align-items-center vh-100">
+    <div>
+        {% if user.is_authenticated %}
+        <div>
+            <h2>Welcome, {{ user.username }}</h2>
+        </div>
+        <div class="d-flex justify-content-center">
+            <a href="{% url 'dashboard' %}" class="btn btn-primary me-2">Dashboard</a>
+            <a href="{% url 'logout' %}" class="btn btn-danger">Log Out</a>
+        </div>
+        {% else %}
+        <div>
+            <h2>You are not logged in.</h2>
+        </div>
+        <div class="d-flex justify-content-center">
+            <a href="{% url 'login' %}" class="btn btn-success me-2">Log In</a>
+            <a href="{% url 'signup' %}" class="btn btn-info">Sign Up</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
 {% endblock content %}
